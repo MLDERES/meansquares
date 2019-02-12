@@ -32,7 +32,9 @@ def split_columns(col_series):
     temp_df[temp_df.isnull()] = False
     return temp_df
 
-
+print(f'{df.shape}')
+df.dropna(subset=['release_date','status'], inplace=True)
+print(f'{df.shape}')
 df.belongs_to_collection = df.belongs_to_collection.map(lambda x: len(get_dictionary(x))).clip(0, 1)
 df.genres = df.genres.map(lambda x: sorted([d['name'] for d in get_dictionary(x)])).map(lambda y: ','.join(map(str, y)))
 df.production_companies = df.production_companies.map(lambda x: [d['name'] for d in get_dictionary(x)]).map(
@@ -58,7 +60,7 @@ release_dt.rename(columns={'month':"release_month","day":"release_day","year":"r
                   inplace=True)
 release_dt['release_dow']=release_dt['release_dt'].dt.dayofweek
 df = pd.concat([df, release_dt],axis=1, sort=False)
-df.drop(columns={'release_date'},inplace=True)
+df.drop(columns={'release_date'}, inplace=True)
 
 # Genres ****
 genres = df.genres.str.get_dummies(sep=',')
