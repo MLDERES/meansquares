@@ -52,10 +52,7 @@ def closest_holiday(df, threshold=5):
         return int(exp.findall(x)[0])
 
     df.days_from_holiday = df.days_from_holiday.apply(lambda x:parse_date(x))
-
     return df
-
-    # df['relative_to_holiday'] = 0 # (-) days before, (0) on the holiday, (+) days after the holiday
 
 def filter_holidays(df, threshold =7):
     mask = abs(df.days_from_holiday) > threshold
